@@ -22,7 +22,7 @@ with(mcmc, iplot(x, y ,pixs=1))
 par(mfrow = c(1,1))
 #with(sf.sim$BUGSoutput$sims.list, hist(i,breaks = ni,xlim = c(0,ni)))
 #with(sf.sim$BUGSoutput$sims.list, hist(j,breaks = nj,xlim = c(0,nj)))
-with(sf.sim$BUGSoutput$sims.list, hist(q,breaks = 3000,xlim=c(0,10)))
+with(sf.sim$BUGSoutput$sims.list, hist(q,breaks = 30,xlim=c(0,500)))
 abline(v=1.67, col= 'red', lwd = 4)
 with(sf.sim$BUGSoutput$sims.list, hist(Sct,xlim=c(0.15,1.35),breaks=n.Sct+2))
 

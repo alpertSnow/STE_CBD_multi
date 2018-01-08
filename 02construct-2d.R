@@ -32,8 +32,8 @@ sf <- function(){
         x <- xc[i]
         #
         log.q ~ dunif(logqLower, logqUpper)
-        q <- 10^log.q
-        #q ~ dunif(0,100)
+        #q <- 10^log.q
+        q ~ dunif(0,500)
 }
 sf.path <- file.path(getwd(), "STE2d.bug")
 write.model(sf, sf.path)

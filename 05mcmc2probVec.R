@@ -1,4 +1,5 @@
 library(plot3D)
+library(reshape2)
 ### mcmc to probVec
 mcmc <- data.frame(sf.sim$BUGSoutput$sims.list)
 n.mcmc <- dim(mcmc)[1]
@@ -85,10 +86,16 @@ w <- rep(dx, times = nj)
 h <- rep(dy, each = ni)
 m.prob <- melt(probMat)/w/h
 
+### reshape data
+m.HPD <- melt(HPD)
+
 ## output 3-column csv
 HPD_DF <- data.frame(x=xv,y=yv,value=m.HPD$value)
-write.csv(HPD_DF,'RANS_HPD.csv', row.names = FALSE)
+write.csv(HPD_DF,'168_HPD.csv', row.names = FALSE)
 
 contourDF <- data.frame(x=xv,y=yv,value=m.prob$value)
-write.csv(contourDF,'RANS_contour.csv', row.names = FALSE)
+write.csv(contourDF,'168_contour.csv', row.names = FALSE)
 
+qden <- density(mcmc$q/115+1)
+write.csv(qden$x, 'qdenx.csv')
+write.csv(qden$y, 'qdeny.csv')

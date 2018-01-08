@@ -43,7 +43,7 @@ yMargin.plot <- ggplot(data = NULL, aes(x = yc, y = j.prob/dy)) +
         theme(plot.margin = margin(l=0.5, b=0.5,r=1, t=0.5, unit='cm'))+
         theme(axis.text = element_text(colour = 'black'))
 
-breaks <- 2000
+breaks <- 200
 qHist <- hist(mcmc$q, breaks = breaks)
 q.est <- mean(mcmc$q)
 q.grid <- qHist$mids
@@ -51,20 +51,20 @@ q.probNorm <- qHist$density/sum(qHist$density)
 dq <- qHist$breaks[2]-qHist$breaks[1]
 q.plot <- ggplot(data = NULL) +
         labs(x = 'q (L/min)',y = 'p(q|μ)') +
-        geom_bar(aes(x = q.grid*0.35, y = q.probNorm/dq/0.35), stat = 'identity', width = dq, fill = gray(0.6)) +
+        geom_bar(aes(x = q.grid/60, y = q.probNorm/dq/60), stat = 'identity', width = dq, fill = gray(0.6)) +
         #geom_polygon(aes(x = q.grid, y = q.xs.probNorm/dq), fill='blue', alpha= 0.25)+
         theme_bw()+
-        scale_x_continuous(limits = c(0,2),expand = c(0, 0),breaks = seq(0,2,0.4)) +
-        scale_y_continuous(limits = c(0,5),expand = c(0, 0),breaks = seq(0,5,1),labels=fmt_decimals(0))+
+        scale_x_continuous(limits = c(0,5),expand = c(0, 0),breaks = seq(0,5,1)) +
+        scale_y_continuous(limits = c(0,0.0005),expand = c(0, 0),breaks = seq(0,5,1))+
         theme(axis.title = italic.text, axis.text = element_text(size = 32))+
         theme(panel.border = element_rect(fill=NA, colour = "black", size=1.2))+
         theme(axis.title.y=element_text(margin = margin(r=0.5, unit = 'cm')))+
         theme(plot.margin = margin(l=0.5, b=0.5,r=1, t=0.5, unit='cm'))+
         theme(axis.ticks = element_line(size = 1.2))+
-        geom_vline(xintercept = q.real*0.35, colour = 'red', size=1.2, lty =2)+
-        geom_vline(xintercept = 0.65581*0.35, colour = 'black', size=1.2, lty =1)+
+        geom_vline(xintercept = q.real/60, colour = 'red', size=1.2, lty =2)+
+        geom_vline(xintercept = q.est/60, colour = 'black', size=1.2, lty =1)+
         theme(axis.text = element_text(colour = 'black'))
         #geom_vline(xintercept = q.xs.wt, colour = 'blue', size=1.2, lty =5)
-
+plot(q.plot)
 plot(grid.arrange(xMargin.plot, yMargin.plot, q.plot, nrow=3))
 #plot(yMargin.plot)

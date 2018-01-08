@@ -13,7 +13,7 @@ library(R2jags)
 library(data.table)
 ## settings
 Sct <- '0.7'
-srr.file <- 'SRR174-CBD.dat'
+srr.file <- 'SRR168-CBD.dat'
 x.center <- 0  # reference center coord in CFD model
 y.center <- 0 
 z.center <- 0 
@@ -45,20 +45,20 @@ H <- t(data.matrix(SRR))*1e6  # Source-receptor matrix
 receptorData <- fread('receptor.dat')
 mu.original <- receptorData$concentration
 mu <- mu.original # Measurement vector, M
-R <- pmin(pmax((mu/2)^2, 100),1e6) # Measuremnet covariance vector, M
+R <- (mu/1.7)^2 # Measuremnet covariance vector, M
 # R <- rep(1e6, M)
 tau <- 1/R # tau vector, M
 
 ### Synthetic data
 i.real <- 255
 j.real <- 129
-ij.real <- (j.real-1)*ni + i.real # source location
-q.real <- 100.0
-#sig.rate <- 0.5 # sigma/mu
-#mu <- H[ ,ij.real] * q.real
-#mu <- as.vector(mu + rtmvnorm(1, rep(0,M), diag(mu * sig.rate)))
-#R <- (mu/2)^2
-#tau <- 1/R
+ij.real <- (j.real-1 +5)*ni + i.real+ 65# source location
+q.real <- 150.0
+sig.rate <- 0.2 # sigma/mu
+mu <- H[ ,ij.real] * q.real
+mu <- as.vector(mu + rtmvnorm(1, rep(0,M), diag(mu * sig.rate)))
+R <- (mu/1.7)^2
+tau <- 1/R
 
 ## cell info
 ## cell center (xc, yc, xz) and cell width (dx, dy dz) calculation

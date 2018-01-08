@@ -24,3 +24,9 @@ vignettes/*.pdf
 *.knit.md
 .Rproj.user
 SRR174-CBD.dat
+168_samplePoints_T_Tr19.dat
+180_samplePoints_T_Tr19.dat
+186_samplePoints_T_Tr19.dat
+SRR168-CBD.dat
+SRR180-CBD.dat
+SRR186-CBD.dat
